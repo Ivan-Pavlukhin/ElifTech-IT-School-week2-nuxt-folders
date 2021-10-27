@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        .hidden{
+            visibility: hidden;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="folders"></div>
+    <script>
+        const foldersReq = document.querySelector('.folders')
+
+        const structure = [
+                {
+                    "folder": true,
+                    "title": "Films",
+                    "children": [
+                    {
+                        "title": "Iron Man.avi"
+                    },
+                    {
+                        "folder": true,
+                        "title": "Fantasy",
+                        "children": [
+                        {
+                            "title": "The Lord of the Rings.avi"
+                        },
+                        {
+                            "folder": true,
+                            "title": 'New folder 1',
+                            "children": false
+                        }
+                        ]
+                    }
+                    ]
+                },
+                {
+                    "folder": true,
+                    "title": "Documents",
+                    "children": [
+                    {
+                        "folder": true,
+                        "title": "ElifTech movie",
+                        "children": null
+                    }
+                    ]
+                }
+                ];
+        
+        foldersReq.append(makeStructure(structure))
+
+        foldersReq.addEventListener('click', handlerClick)
+        
+        function handlerClick(e){
+            if(!e.target.attributes.toggle){
+                return
+            }
+            const currentId = e.target.attributes.dataname.value;
+            const currentList = document.getElementById(`${currentId}`)
+            if(currentList.classList.contains('hidden')){
+                currentList.classList.remove('hidden')
+            } else {
+                currentList.classList.add('hidden')
+            }
+            
+            console.log(currentList);
+            const currentValue = e.target.attributes.toggle.value
+            // e.target.setAttributes('toggle', !currentValue)
+            
+        }
+
+        function makeStructure(structure) {
+            const mainListReq = document.createElement('ul')
+            
+            recursion(structure, mainListReq)
+
+            function recursion(structure, element) {
+                for (const e of structure) {
+                    const itemReq = document.createElement('li')
+
+                    if(!e.folder) {
+                        const fileReq = document.createElement('li')
+                        itemReq.textContent = e.title
+                    }
+
+                    if(e.folder){
+                        
+                        const listReq = document.createElement('ul')
+                        const itemForBtnReq = document.createElement('li')
+                        const itemBtnReq = document.createElement('button')
+
+                        itemBtnReq.textContent = e.title
+                        itemBtnReq.setAttribute('dataName', e.title.split(' ').join('-'))
+                        listReq.setAttribute('id', e.title.split(' ').join('-'))
+                        itemBtnReq.setAttribute('toggle', false)
+                        // element.append(itemForBtnReq)
+                        // itemForBtnReq.append(itemBtnReq)
+                        itemReq.append(itemBtnReq, listReq)
+                        if(e.children){
+                            recursion(e.children, listReq)
+                        }
+                        // if(!e.children){ return }
+                        // console.log('listReq', listReq);
+                    } 
+                    
+                    element.append(itemReq)
+                }
+            }
+            console.log('mainListReq',  mainListReq);
+            return mainListReq
+        }
+
+    </script>
+</body>
+</html>
+
+<!-- for (const child of element.children) {
+    if(child.folder){
+        const childReq = document.createElement('ul')
+        elementReq.append(childReq)
+    } else{
+        const childReq = document.createElement('li')
+        childReq.text = child.title
+        elementReq.append(childReq)
+    }
+} -->
