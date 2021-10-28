@@ -47,7 +47,6 @@
     </style>
 </head>
 <body>
-    
     <div class="folders"></div>
     <script>
         const foldersReq = document.querySelector('.folders')
@@ -125,7 +124,6 @@
                 ];
         
         foldersReq.append(makeStructure(structure))
-
         foldersReq.addEventListener('click', handlerClick)
         
         function handlerClick(e){
@@ -134,16 +132,10 @@
             }
             const currentId = e.target.attributes.dataname.value;
             const currentList = document.getElementById(`${currentId}`)
-            if(currentList.classList.contains('hidden')){
-                currentList.classList.remove('hidden')
-            } else {
+
+            currentList.classList.contains('hidden')?
+                currentList.classList.remove('hidden'):
                 currentList.classList.add('hidden')
-            }
-            
-            console.log(currentList);
-            const currentValue = e.target.attributes.toggle.value
-            // e.target.setAttributes('toggle', !currentValue)
-            
         }
 
         function makeStructure(structure) {
@@ -156,15 +148,13 @@
                     const itemReq = document.createElement('li')
 
                     if(!e.folder) {
-                        // const fileReq = document.createElement('li')
-                        itemReq.textContent = e.title
                         const spanReq = document.createElement('span')
-                        
+
+                        spanReq.textContent = e.title
                         itemReq.append(spanReq)
                     }
 
                     if(e.folder){
-                        
                         const listReq = document.createElement('ul')
                         const itemForBtnReq = document.createElement('li')
                         const itemBtnReq = document.createElement('button')
@@ -173,14 +163,11 @@
                         itemBtnReq.setAttribute('dataName', e.title.split(' ').join('-'))
                         listReq.setAttribute('id', e.title.split(' ').join('-'))
                         itemBtnReq.setAttribute('toggle', false)
-                        // element.append(itemForBtnReq)
-                        // itemForBtnReq.append(itemBtnReq)
                         itemReq.append(itemBtnReq, listReq)
+                        
                         if(e.children){
                             recursion(e.children, listReq)
                         }
-                        // if(!e.children){ return }
-                        // console.log('listReq', listReq);
                     } 
                     
                     element.append(itemReq)
@@ -193,14 +180,3 @@
     </script>
 </body>
 </html>
-
-<!-- for (const child of element.children) {
-    if(child.folder){
-        const childReq = document.createElement('ul')
-        elementReq.append(childReq)
-    } else{
-        const childReq = document.createElement('li')
-        childReq.text = child.title
-        elementReq.append(childReq)
-    }
-} -->
