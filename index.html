@@ -11,6 +11,10 @@
             list-style: none;
         }
 
+        button{
+            border: none;
+        }
+
         button::before{
             content: " ";
             position: absolute;
@@ -164,7 +168,7 @@
                         listReq.setAttribute('id', e.title.split(' ').join('-'))
                         itemBtnReq.setAttribute('toggle', false)
                         itemReq.append(itemBtnReq, listReq)
-                        
+
                         if(e.children){
                             recursion(e.children, listReq)
                         }
