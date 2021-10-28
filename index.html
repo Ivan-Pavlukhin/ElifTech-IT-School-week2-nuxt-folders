@@ -6,6 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style type="text/css">
+
+        ul{
+            list-style: none;
+        }
+
+        button::before{
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: block;
+            background-image: url(/folder.png);
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+        }
+
+        li{
+            position: relative;
+            padding-left: 30px;
+            margin-top: 5px;
+        }
+
+        span::before{
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: block;
+            background-image: url(/file-video.png);
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+        }
         .hidden{
             visibility: hidden;
             position: absolute;
@@ -122,8 +156,11 @@
                     const itemReq = document.createElement('li')
 
                     if(!e.folder) {
-                        const fileReq = document.createElement('li')
+                        // const fileReq = document.createElement('li')
                         itemReq.textContent = e.title
+                        const spanReq = document.createElement('span')
+                        
+                        itemReq.append(spanReq)
                     }
 
                     if(e.folder){
